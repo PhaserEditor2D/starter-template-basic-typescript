@@ -1,11 +1,14 @@
-# Commands to start on workspace startup
 tasks:
-  - name: TypeScript Compiler
-    init: npm install    
-    command: npm run watch
-#  - name: Editor Server
-#    command: npm run editor-remote
-# Ports to expose on workspace startup
-ports:
-  - port: 1959
-    onOpen: open-preview
+  - name: Install
+    init: >
+      npm install &&
+      gp sync-done install # 'install' is an arbitrary name I picked
+    command: rails server
+  - name: TypeScript compiler
+    init: >
+      npm run watch &&
+      gp sync-await install # 'tsc' is an arbitrary name I picked
+    command: rails server
+  - name: Editor server
+    init: gp sync-await install # wait for the above 'install' to finish
+    command: npm run editor-remote
