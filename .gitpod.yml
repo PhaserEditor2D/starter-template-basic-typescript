@@ -1,0 +1,11 @@
+# Commands to start on workspace startup
+tasks:
+  - name: TypeScript Compiler
+  - init: npm install
+    command: npm run watch
+  - name: Editor Server
+    command: npm run editor-remote
+# Ports to expose on workspace startup
+ports:
+  - port: 1959
+    onOpen: open-preview
