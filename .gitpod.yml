@@ -1,8 +1,8 @@
 # Commands to start on workspace startup
 tasks:
+  - init: npm install
   - name: TypeScript Compiler
-  - init: |
-      npm install
+  - command:
       npm run watch
   - name: Editor Server
     command: npm run editor-remote
