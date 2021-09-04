@@ -10,15 +10,16 @@ window.addEventListener('load', function () {
             autoCenter: Phaser.Scale.CENTER_BOTH
         }
     });
+    game.scene.add("Preload", Preload);
     game.scene.add("Level", Level);
     game.scene.add("Boot", Boot, true);
 });
 class Boot extends Phaser.Scene {
     preload() {
-        this.load.pack("pack", "assets/asset-pack.json");
+        this.load.pack("pack", "assets/preload-asset-pack.json");
     }
     create() {
-        this.scene.start("Level");
+        this.scene.start("Preload");
     }
 }
 class UserComponent {
@@ -64,6 +65,26 @@ class UserComponent {
         // override this
     }
 }
+/// <reference path="./UserComponent.ts"/>
+/* START OF COMPILED CODE */
+class PreloadText extends UserComponent {
+    constructor(gameObject) {
+        super(gameObject);
+        this.gameObject = gameObject;
+        gameObject["__PreloadText"] = this;
+        /* START-USER-CTR-CODE */
+        this.scene.load.on(Phaser.Loader.Events.PROGRESS, (p) => {
+            this.gameObject.text = (p * 100) + "%";
+        });
+        /* END-USER-CTR-CODE */
+    }
+    static getComponent(gameObject) {
+        return gameObject["__PreloadText"];
+    }
+    gameObject;
+}
+/* END OF COMPILED CODE */
+// You can write more code here
 /// <reference path="./UserComponent.ts"/>
 // You can write more code here
 /* START OF COMPILED CODE */
@@ -120,6 +141,41 @@ class Level extends Phaser.Scene {
     // Write your code here.
     create() {
         this.editorCreate();
+    }
+}
+/* END OF COMPILED CODE */
+// You can write more code here
+// You can write more code here
+/* START OF COMPILED CODE */
+class Preload extends Phaser.Scene {
+    constructor() {
+        super("Preload");
+        /* START-USER-CTR-CODE */
+        // Write your code here.
+        /* END-USER-CTR-CODE */
+    }
+    editorPreload() {
+        this.load.pack("asset-pack", "assets/asset-pack.json");
+    }
+    editorCreate() {
+        // guapen
+        const guapen = this.add.image(400, 219, "guapen");
+        guapen.scaleX = 0.5915891440784282;
+        guapen.scaleY = 0.5915891440784282;
+        // progress
+        const progress = this.add.text(381.5, 335, "", {});
+        progress.text = "0%";
+        progress.setStyle({ "fontSize": "30px" });
+        // progress (components)
+        new PreloadText(progress);
+        this.events.emit("scene-awake");
+    }
+    /* START-USER-CODE */
+    // Write your code here
+    preload() {
+        this.editorCreate();
+        this.editorPreload();
+        this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start("Level"));
     }
 }
 /* END OF COMPILED CODE */
