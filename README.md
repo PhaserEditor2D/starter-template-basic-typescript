@@ -16,6 +16,7 @@ This project is based on TypeScript so for getting the game, first, you need to 
 
 ```bash
 $ npm install
+$ npm update
 ```
 
 Then, for running the game, you need to compile the TypeScript files:
